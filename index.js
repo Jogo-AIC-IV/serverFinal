@@ -112,5 +112,5 @@ const onConnection = (socket) => {
 }
 
 io.on("connection", onConnection);
-httpServer.listen(3000);
+httpServer.listen(process.env.PORT || 5000);
 console.log('Server up on port :3000');
