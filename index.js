@@ -73,12 +73,12 @@ setInterval(() => {
                 const userTwo = match.userTwoId != 'bot' ? users.filter(user => user.id == match.userTwoId) : null;
                 const matchUsers = [userOne, userTwo]
                 match.tables.forEach((table, tableIndex) => {
-                    if(!matchUsers[tableIndex] || !matchUsers[tableIndex]._socket) return;
-                    table.desassociateSocketEvents(matchUsers[tableIndex]._socket);
+                    if(!matchUsers[tableIndex] || !matchUsers[tableIndex][0] || !matchUsers[tableIndex][0]._socket) return;
+                    table.desassociateSocketEvents(matchUsers[tableIndex][0]._socket);
                     if(table.life > 0) {
-                        matchUsers[tableIndex].handleVictory();
+                        matchUsers[tableIndex][0].handleVictory();
                     }else {
-                        matchUsers[tableIndex].handleDefeat();
+                        matchUsers[tableIndex][0].handleDefeat();
                     }
                 });
                 doneMatches.push(matchIndex);
