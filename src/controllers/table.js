@@ -2,8 +2,10 @@ import { Unit } from './unit.js';
 import { defaultUnitTypes } from '../config/defaultUnitTypes.js';
 
 class Table {
-    constructor(userName, types, bot=false) {
-        this.userName       = userName;
+    constructor(userId=null, username='Bot', rank=1, types=null) {
+        this.userId         = userId;
+        this.username       = username || 'Bot';
+        this.rank           = rank || 1;
         this.unitTypes      = types || defaultUnitTypes.unitTypes;
         this.unitPrice      = 20;
         this.unitList       = [];
@@ -12,9 +14,11 @@ class Table {
         this.life           = 500;
         this.cycle          = 0;
         this.cycleActions   = [];
-        this.bot            = bot;
+        this.bot            = userId == null;
         this.maxTier        = 0;
         this.socketId       = null;
+        console.log('this.userId', this.userId)
+        console.log('this.bot', this.bot)
     }
     surrender(socketInstance) {
         this.gold = 0;

@@ -34,24 +34,51 @@ setInterval(() => {
                 user.joinRoom(roomId);
 
                 var userUnities = defaultUnitTypes.unitTypes.filter(unit => user.userData.selectedTypes.includes(unit.name));
+
+                const userConfig = {
+                    id:       user.id,
+                    username: user.username,
+                    rank:     user.rank,
+                    types:    userUnities
+                };
+
+                const botConfig = {
+                    id:       null,
+                    username: null,
+                    rank:     null,
+                    types:    null
+                }
                 
-                console.log(userUnities);
                 //console.log(`Starting match with bot on room #${roomId}`);
-                matches.push(new Match(io, roomId, user.id, userUnities, null, null));
+                matches.push(new Match(io, roomId, userConfig, botConfig));
             }
             if(oponent) {
                 //console.log(`Oponent found!`);
                 roomId += `${oponent.id}`;
                 user.status = 'playing';
                 user.joinRoom(roomId);
+
                 oponent.status = 'playing';
                 oponent.joinRoom(roomId);
                 //console.log(`Starting match with #${oponent.id} on room #${roomId}`);
                 var userUnities = defaultUnitTypes.unitTypes.filter(unit => user.userData.selectedTypes.includes(unit.name));
                 var oponentUnities = defaultUnitTypes.unitTypes.filter(unit => oponent.userData.selectedTypes.includes(unit.name));
 
+                const userConfig = {
+                    id:       user.id,
+                    username: user.userData.username,
+                    rank:     user.userData.rank,
+                    types:    userUnities
+                };
+                const oponentConfig = {
+                    id:       oponent.id,
+                    username: oponent.userData.oponentname,
+                    rank:     oponent.userData.rank,
+                    types:    oponentUnities
+                };
+
                 
-                matches.push(new Match(io, roomId, user.id, userUnities, oponent.id, oponentUnities));
+                matches.push(new Match(io, roomId, userConfig, oponentConfig));
             }
         }
     });
@@ -69,8 +96,8 @@ setInterval(() => {
                 match.executeCycle();
             break;
             case 'finished':
-                const userOne = match.userOneId != 'bot' ? users.filter(user => user.id == match.userOneId) : null;
-                const userTwo = match.userTwoId != 'bot' ? users.filter(user => user.id == match.userTwoId) : null;
+                const userOne = match.userOne.id != 'bot' ? users.filter(user => user.id == match.userOne.id) : null;
+                const userTwo = match.userTwo.id != 'bot' ? users.filter(user => user.id == match.userTwo.id) : null;
                 const matchUsers = [userOne, userTwo]
                 match.tables.forEach((table, tableIndex) => {
                     if(!matchUsers[tableIndex] || !matchUsers[tableIndex][0] || !matchUsers[tableIndex][0]._socket) return;
