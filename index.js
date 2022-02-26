@@ -1,3 +1,4 @@
+import Express from 'express';
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { User } from "./src/controllers/user.js";
@@ -10,7 +11,8 @@ mongoose.connect('mongodb+srv://admin:admin@sistemasinternet.mw31i.mongodb.net/t
     console.log('Connected to MongoDb');
 });
 
-const httpServer = createServer();
+const express = Express();
+const httpServer = createServer(express);
 const io = new Server(httpServer, { cors: { origin: '*' }});
 
 const maxSearchAttemps = 2;
