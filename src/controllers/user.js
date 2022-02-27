@@ -26,6 +26,15 @@ class User {
     }
     handleVictory() {
         this.userData.gold += 20;
+        this.userData.rankCurrent += 1
+
+        if (this.userData.rankCurrent >= this.userData.rankNext) {
+            this.userData.gold += 50
+            this.userData.rank += 1
+            this.userData.rankNext += 1
+            this.userData.rankCurrent = 0
+        }
+
         this._socket.emit('SERVER_MATCH_END', { won: true, gold: this.userData.gold });
         this.saveUserData();
     }

@@ -9,7 +9,7 @@ class Match {
         this.status = 'waiting';
         this.cycle = 0;
         this.cycleEnemy = 0;
-        this.cycleEnemyMax = 30;
+        this.cycleEnemyMax = 60;
         this.tables = [];
 
         this.userOne = userOne;

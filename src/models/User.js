@@ -18,9 +18,14 @@ const UserSchema = new mongoose.Schema({
         default: 1,
         required: true
     },
+    rankCurrent: {
+        type: Number,
+        default: 1,
+        required: true
+    },
     rankNext:       {
         type: Number,
-        default: 10,
+        default: 3,
         required: true
     },
     gold:           {
