@@ -49,7 +49,7 @@ setInterval(() => {
                     types:    null
                 }
                 
-                //console.log(`Starting match with bot on room #${roomId}`);
+                console.log(`Starting match with bot on room #${roomId}`);
                 matches.push(new Match(io, roomId, userConfig, botConfig));
             }
             if(oponent) {
@@ -87,6 +87,7 @@ setInterval(() => {
 // Match executing
 setInterval(() => {
     // Executing and Removing done matches
+    // console.log("matches: ", matches)
     matches.forEach((match, matchIndex) => {
         switch(match.status) {
             case 'waiting':
@@ -113,6 +114,7 @@ setInterval(() => {
         }
     });
     doneMatches.forEach(id => {
+        doneMatches.splice(id, 1)
         matches.splice(id, 1);
     })
 }, 500);
